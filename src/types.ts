@@ -102,7 +102,10 @@ export type SessionEngineOptions = {
   /** Target storage driver. Defaults to window.localStorage. */
   storage?: StorageLike;
   /** Custom event target for dispatching/listening to cross-tab synchronization events. */
-  window?: Pick<Window, "addEventListener" | "removeEventListener" | "dispatchEvent">;
+  window?: Pick<
+    Window,
+    "addEventListener" | "removeEventListener" | "dispatchEvent"
+  >;
   /** Logger implementation. */
   logger?: LoggerLike;
   /** Custom key used to store logout synchronization signals. */

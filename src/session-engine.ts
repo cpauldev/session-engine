@@ -2,8 +2,8 @@ import type {
   AuthFetchOptions,
   CachedValue,
   LoggerLike,
-  SessionValidationResult,
   SessionEngineOptions,
+  SessionValidationResult,
   StorageCache,
   StorageLike,
   StorageOptions,
@@ -22,9 +22,10 @@ function keys(storage: StorageLike): string[] {
   return output;
 }
 
-function normalizeSessionValidationResult(
-  result: SessionValidationResult,
-): { valid: boolean; clearAuth: boolean } {
+function normalizeSessionValidationResult(result: SessionValidationResult): {
+  valid: boolean;
+  clearAuth: boolean;
+} {
   if (result === true || result === "valid") {
     return { valid: true, clearAuth: false };
   }
@@ -35,9 +36,9 @@ function normalizeSessionValidationResult(
 }
 
 /**
- * Retrieves a typed value from browser storage. 
+ * Retrieves a typed value from browser storage.
  * Automatically handles JSON parsing, key expiration (TTL verification), and corrupt-entry removal.
- * 
+ *
  * @param key The storage key.
  * @param ttl Optional time-to-live threshold in milliseconds.
  * @param options Configurations for the storage container and logger interfaces.
@@ -78,7 +79,7 @@ export function getFromStorage<T>(
 
 /**
  * Saves a value into browser storage wrapped in a metadata-enriched TTL envelope.
- * 
+ *
  * @param key The target storage key.
  * @param data The data to write.
  * @param storageOptions Storage lifecycle configuration (ttl, version).
@@ -112,7 +113,7 @@ export function saveToStorage<T>(
 
 /**
  * Removes a key from browser storage.
- * 
+ *
  * @param key The target storage key to delete.
  * @param options Configurations for the storage container and logger interfaces.
  */
@@ -134,7 +135,7 @@ export function removeFromStorage(
 
 /**
  * Clears all keys starting with a specific prefix from browser storage.
- * 
+ *
  * @param prefix The key prefix match filter.
  * @param options Configurations for the storage container and logger interfaces.
  * @returns The total number of items removed.
@@ -161,7 +162,7 @@ export function clearStorageByPrefix(
 
 /**
  * Calculates the current age of a cached entry in milliseconds.
- * 
+ *
  * @param key The storage key.
  * @param options Configuration for the storage container.
  * @returns The age of the entry in milliseconds, or null if missing or invalid.
@@ -184,14 +185,16 @@ export function getStorageAge(
 
 /**
  * Creates a structured StorageCache object exposing clean, pre-bound lifecycle getters and setters.
- * 
+ *
  * @param options Configuration for the storage container and logger interfaces.
  * @returns A cache access facade.
  */
-export function createStorageCache(options: {
-  storage?: StorageLike | null;
-  logger?: LoggerLike;
-} = {}): StorageCache {
+export function createStorageCache(
+  options: {
+    storage?: StorageLike | null;
+    logger?: LoggerLike;
+  } = {},
+): StorageCache {
   return {
     get: (key, ttl) => getFromStorage(key, ttl, options),
     save: (key, data, storageOptions) =>
@@ -207,13 +210,16 @@ export function createStorageCache(options: {
 /**
  * Wraps the fetch API with central response-intercept hooks for handling unauthorized (401)
  * and rate-limited (429) requests.
- * 
+ *
  * @param options Configurations for implementation fetch, 401 callback, and 429 callback hooks.
  * @returns An auth-aware fetch function.
  */
 export function createAuthFetch(options: AuthFetchOptions = {}) {
   const fetchImpl = options.fetch ?? fetch;
-  return async (input: RequestInfo | URL, init?: RequestInit): Promise<Response> => {
+  return async (
+    input: RequestInfo | URL,
+    init?: RequestInit,
+  ): Promise<Response> => {
     const response = await fetchImpl(input, init);
     if (response.status === 401) await options.onUnauthorized?.(response);
     if (response.status === 429) await options.onRateLimit?.(response);
@@ -222,7 +228,7 @@ export function createAuthFetch(options: AuthFetchOptions = {}) {
 }
 
 /**
- * Manages browser session cache lifecycles, user-data ownership markers, 
+ * Manages browser session cache lifecycles, user-data ownership markers,
  * stale-session validations, and cross-tab logout synchronization signals.
  */
 export class SessionEngine {
@@ -231,7 +237,7 @@ export class SessionEngine {
 
   /**
    * Initializes a new instance of the SessionEngine.
-   * 
+   *
    * @param options Configuration options scoped to a namespace.
    */
   constructor(private readonly options: SessionEngineOptions) {}
@@ -240,30 +246,38 @@ export class SessionEngine {
     return this.options.storage ?? getDefaultStorage();
   }
 
-  private windowRef():
-    | Pick<Window, "addEventListener" | "removeEventListener" | "dispatchEvent">
-    | null {
-    return this.options.window ?? (typeof window === "undefined" ? null : window);
+  private windowRef(): Pick<
+    Window,
+    "addEventListener" | "removeEventListener" | "dispatchEvent"
+  > | null {
+    return (
+      this.options.window ?? (typeof window === "undefined" ? null : window)
+    );
   }
 
   /**
    * Resolves the scoped key used to store logout synchronization signals.
    */
   get logoutSignalKey(): string {
-    return this.options.logoutSignalKey ?? `${this.options.namespace}:auth:logout-signal`;
+    return (
+      this.options.logoutSignalKey ??
+      `${this.options.namespace}:auth:logout-signal`
+    );
   }
 
   /**
    * Resolves the scoped key used to verify user data ownership.
    */
   get ownershipKey(): string {
-    return this.options.ownershipKey ?? `${this.options.namespace}:cache:user-id`;
+    return (
+      this.options.ownershipKey ?? `${this.options.namespace}:cache:user-id`
+    );
   }
 
   /**
    * Wipes active authentication caches and callbacks.
    * Optionally broadcasts the action to synchronize other browser tabs.
-   * 
+   *
    * @param reason The trigger cause for clearing authentication (e.g. 'expired').
    * @param broadcast If true, broadcasts a logout event via storage sync.
    */
@@ -297,7 +311,7 @@ export class SessionEngine {
 
   /**
    * Subscribes to browser storage events to synchronize logouts across multiple open tabs.
-   * 
+   *
    * @returns A cleanup callback to unsubscribe from storage events.
    */
   setupCrossTabSync(): () => void {
@@ -320,7 +334,7 @@ export class SessionEngine {
 
   /**
    * Performs an asynchronous session health check, clearing auth caches on failure.
-   * 
+   *
    * @returns A promise resolving to true if the session is valid, false otherwise.
    */
   async validateSession(): Promise<boolean> {
@@ -328,7 +342,8 @@ export class SessionEngine {
     const result = normalizeSessionValidationResult(
       await this.options.validateSession(),
     );
-    if (result.clearAuth) this.clearAuthState("session_validation_failed", true);
+    if (result.clearAuth)
+      this.clearAuthState("session_validation_failed", true);
     return result.valid;
   }
 
@@ -340,17 +355,23 @@ export class SessionEngine {
     const storage = this.storage();
     if (!storage) return;
     const currentUserId = this.options.getCurrentUserId?.() ?? null;
-    let storedUserId = storage.getItem(this.ownershipKey);
+    const storedUserId = storage.getItem(this.ownershipKey);
 
-    const clearAction = this.options.clearUserDataCaches ?? this.options.clearUserCaches;
+    const clearAction =
+      this.options.clearUserDataCaches ?? this.options.clearUserCaches;
 
     const hasScopedCache = () => {
       if (!this.options.userCachePrefixes) return false;
       const keysList = keys(storage);
       return (
         keysList.some((key) =>
-          this.options.userCachePrefixes?.some((prefix) => key.startsWith(prefix)),
-        ) || (this.options.queryCacheKey ? keysList.includes(this.options.queryCacheKey) : false)
+          this.options.userCachePrefixes?.some((prefix) =>
+            key.startsWith(prefix),
+          ),
+        ) ||
+        (this.options.queryCacheKey
+          ? keysList.includes(this.options.queryCacheKey)
+          : false)
       );
     };
 
@@ -382,7 +403,7 @@ export class SessionEngine {
 
   /**
    * Boots up the session engine, configuring sync listeners and evaluating ownership structures.
-   * 
+   *
    * @returns A cleanup callback to terminate active event listeners.
    */
   start(): () => void {
@@ -390,9 +411,12 @@ export class SessionEngine {
     void this.validateOwnership();
     if (this.options.validateSession) {
       this.validateSession().catch((error) => {
-        this.options.logger?.warn?.("[SessionEngine] Session validation failed", {
-          error,
-        });
+        this.options.logger?.warn?.(
+          "[SessionEngine] Session validation failed",
+          {
+            error,
+          },
+        );
       });
     }
     return cleanup;

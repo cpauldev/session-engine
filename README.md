@@ -16,13 +16,13 @@ It is designed for developers building authenticated SPAs, dashboards, account p
 
 ## Why use SessionEngine?
 
-| Feature | Without SessionEngine | With **SessionEngine** |
-| :----------------------- | :--------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------- |
-| **TTL Cache Entries**    | Expiration metadata is duplicated and inconsistently parsed.                             | ⏳ **TTL Envelopes.** `createStorageCache()` stores versioned TTL envelopes.                                         |
-| **Corrupted Storage**    | Bad JSON can break app startup or hooks.                                                 | 🧹 **Automatic Cleanup.** Corrupted entries are removed and treated as misses.                                       |
-| **User Ownership**       | Cached data can survive account switches.                                                | 👤 **Ownership Markers.** Ownership markers clear cache when the user changes.                                       |
-| **Cross-Tab Logout**     | One tab logs out while others keep stale state.                                          | 🔄 **Cross-Tab Sync.** Logout signals notify other tabs through storage events.                                      |
-| **Fetch Behavior**       | Every callsite handles `401` and `429` differently.                                      | ⚡ **Auth-Aware Fetch.** `createAuthFetch()` centralizes unauthorized and rate-limit hooks.                           |
+| Feature               | Without SessionEngine                                        | With **SessionEngine**                                                                      |
+| :-------------------- | :----------------------------------------------------------- | :------------------------------------------------------------------------------------------ |
+| **TTL Cache Entries** | Expiration metadata is duplicated and inconsistently parsed. | ⏳ **TTL Envelopes.** `createStorageCache()` stores versioned TTL envelopes.                |
+| **Corrupted Storage** | Bad JSON can break app startup or hooks.                     | 🧹 **Automatic Cleanup.** Corrupted entries are removed and treated as misses.              |
+| **User Ownership**    | Cached data can survive account switches.                    | 👤 **Ownership Markers.** Ownership markers clear cache when the user changes.              |
+| **Cross-Tab Logout**  | One tab logs out while others keep stale state.              | 🔄 **Cross-Tab Sync.** Logout signals notify other tabs through storage events.             |
+| **Fetch Behavior**    | Every callsite handles `401` and `429` differently.          | ⚡ **Auth-Aware Fetch.** `createAuthFetch()` centralizes unauthorized and rate-limit hooks. |
 
 ---
 
@@ -129,16 +129,16 @@ await session.validateOwnership();
 
 ## API Reference
 
-| Export | Purpose |
-| :-- | :-- |
-| `SessionEngine` | Coordinates session validation, ownership markers, cache clearing, and logout signals. |
-| `createStorageCache(options)` | Creates typed TTL cache helpers over `localStorage`-like storage. |
-| `createAuthFetch(options)` | Wraps `fetch` with `401` and `429` hooks. |
-| `getFromStorage(key, ttl?, options?)` | Reads a versioned TTL storage envelope from options.storage. |
-| `saveToStorage(key, value, storageOptions?, options?)` | Saves a value to options.storage with TTL/version metadata. |
-| `removeFromStorage(key, options?)` | Removes one key from options.storage. |
-| `clearStorageByPrefix(prefix, options?)` | Removes all keys with a prefix from options.storage. |
-| `getStorageAge(key, options?)` | Returns entry age in milliseconds, or `null`. |
+| Export                                                 | Purpose                                                                                |
+| :----------------------------------------------------- | :------------------------------------------------------------------------------------- |
+| `SessionEngine`                                        | Coordinates session validation, ownership markers, cache clearing, and logout signals. |
+| `createStorageCache(options)`                          | Creates typed TTL cache helpers over `localStorage`-like storage.                      |
+| `createAuthFetch(options)`                             | Wraps `fetch` with `401` and `429` hooks.                                              |
+| `getFromStorage(key, ttl?, options?)`                  | Reads a versioned TTL storage envelope from options.storage.                           |
+| `saveToStorage(key, value, storageOptions?, options?)` | Saves a value to options.storage with TTL/version metadata.                            |
+| `removeFromStorage(key, options?)`                     | Removes one key from options.storage.                                                  |
+| `clearStorageByPrefix(prefix, options?)`               | Removes all keys with a prefix from options.storage.                                   |
+| `getStorageAge(key, options?)`                         | Returns entry age in milliseconds, or `null`.                                          |
 
 ---
 

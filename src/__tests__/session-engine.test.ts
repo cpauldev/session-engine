@@ -31,7 +31,9 @@ describe("session-engine", () => {
   it("stores TTL values and clears corrupted entries", () => {
     const storage = createMemoryStorage();
     saveToStorage("key", { ok: true }, { ttl: 10 }, { storage });
-    expect(getFromStorage<{ ok: boolean }>("key", 10, { storage })?.ok).toBe(true);
+    expect(getFromStorage<{ ok: boolean }>("key", 10, { storage })?.ok).toBe(
+      true,
+    );
     storage.setItem("bad", "{");
     expect(getFromStorage("bad", undefined, { storage })).toBeNull();
     expect(storage.getItem("bad")).toBeNull();
@@ -84,7 +86,9 @@ describe("session-engine", () => {
     await engine.validateOwnership();
     expect(cleared).toHaveBeenCalled();
     engine.setupCrossTabSync();
-    listeners.get("storage")?.({ key: engine.logoutSignalKey } as unknown as Event);
+    listeners.get("storage")?.({
+      key: engine.logoutSignalKey,
+    } as unknown as Event);
     expect(cleared).toHaveBeenCalledTimes(2);
   });
 
