@@ -2,7 +2,7 @@
 
 # SessionEngine: Browser Session and Cache Lifecycle Tools
 
-![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white) ![Browser](https://img.shields.io/badge/-Browser_Storage-0F766E?style=flat-square) ![Fetch API](https://img.shields.io/badge/-Fetch_API-0284C7?style=flat-square) ![License](https://img.shields.io/badge/-MIT_License-blue?style=flat-square) [![Changelog](https://img.shields.io/badge/Changelog-v0.1.0-blue?style=flat-square)](./CHANGELOG.md)
+![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white) ![Browser](https://img.shields.io/badge/-Browser_Storage-0F766E?style=flat-square) ![Fetch API](https://img.shields.io/badge/-Fetch_API-0284C7?style=flat-square) ![License](https://img.shields.io/badge/-MIT_License-blue?style=flat-square) [![Changelog](https://img.shields.io/badge/Changelog-v0.1.1-blue?style=flat-square)](./CHANGELOG.md)
 
 SessionEngine helps browser applications manage local session cache safely: TTL storage envelopes, corrupted-entry cleanup, prefix clearing, ownership markers, cross-tab logout signals, stale-session validation, and auth-aware fetch behavior.
 
@@ -173,7 +173,7 @@ bun run test:smoke
 ## Related Packages
 
 - [`rate-engine`](https://github.com/cpauldev/rate-engine) for policy-driven rate limiting.
-- [`route-engine`](https://github.com/cpauldev/route-engine) for safe HTTP route boundaries.
+- [`boundary-engine`](https://github.com/cpauldev/boundary-engine) for safe HTTP route boundaries.
 - [`redact-log`](https://github.com/cpauldev/redact-log) for safe logging.
 - [`secret-engine`](https://github.com/cpauldev/secret-engine) for context-bound encryption and secret handling.
 

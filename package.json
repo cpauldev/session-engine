@@ -1,6 +1,6 @@
 {
   "name": "session-engine",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "MIT",
   "author": "Christian Paul (https://github.com/cpauldev)",
   "description": "SessionEngine is a browser session and cache lifecycle toolkit for TypeScript applications that need TTL storage, ownership validation, cross-tab logout sync, and auth-aware fetch handling.",
