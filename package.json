@@ -1,0 +1,56 @@
+{
+  "name": "session-engine",
+  "version": "0.1.0",
+  "license": "MIT",
+  "author": "Christian Paul (https://github.com/cpauldev)",
+  "description": "SessionEngine is a browser session and cache lifecycle toolkit for TypeScript applications that need TTL storage, ownership validation, cross-tab logout sync, and auth-aware fetch handling.",
+  "keywords": [
+    "session",
+    "localstorage",
+    "cache",
+    "auth",
+    "cross-tab",
+    "typescript",
+    "browser",
+    "ttl"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cpauldev/session-engine.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cpauldev/session-engine/issues"
+  },
+  "homepage": "https://github.com/cpauldev/session-engine#readme",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "test": "bun test src/__tests__",
+    "test:smoke": "bun -e \"const mod = await import('./dist/index.js'); for (const key of ['SessionEngine','createStorageCache','createAuthFetch','getFromStorage','saveToStorage']) { if (typeof mod[key] !== 'function') throw new Error('Missing export: ' + key); }\"",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.test.json"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.1",
+    "bun-types": "^1.3.14",
+    "typescript": "^6.0.3"
+  },
+  "private": false
+}
