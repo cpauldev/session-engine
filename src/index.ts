@@ -1,5 +1,4 @@
 export {
-  SessionEngine,
   clearStorageByPrefix,
   createAuthFetch,
   createStorageCache,
@@ -7,6 +6,7 @@ export {
   getStorageAge,
   removeFromStorage,
   saveToStorage,
+  SessionEngine,
 } from "./session-engine";
 
 export type {

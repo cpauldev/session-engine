@@ -1,8 +1,8 @@
-<img src="https://raw.githubusercontent.com/cpauldev/session-engine/main/banner.png" alt="SessionEngine Banner" width="100%" />
+<img src="https://raw.githubusercontent.com/cpauldev/session-engine/main/banner.webp" alt="SessionEngine Banner" width="100%" />
 
 # SessionEngine: Browser Session and Cache Lifecycle Tools
 
-![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white) ![Browser](https://img.shields.io/badge/-Browser_Storage-0F766E?style=flat-square) ![Fetch API](https://img.shields.io/badge/-Fetch_API-0284C7?style=flat-square) ![License](https://img.shields.io/badge/-MIT_License-blue?style=flat-square) [![Changelog](https://img.shields.io/badge/Changelog-v0.1.1-blue?style=flat-square)](./CHANGELOG.md)
+![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white) ![Browser](https://img.shields.io/badge/-Browser_Storage-0F766E?style=flat-square) ![Fetch API](https://img.shields.io/badge/-Fetch_API-0284C7?style=flat-square) ![License](https://img.shields.io/badge/-MIT_License-blue?style=flat-square) [![Changelog](https://img.shields.io/badge/Changelog-v0.1.2-blue?style=flat-square)](./CHANGELOG.md)
 
 SessionEngine helps browser applications manage local session cache safely: TTL storage envelopes, corrupted-entry cleanup, prefix clearing, ownership markers, cross-tab logout signals, stale-session validation, and auth-aware fetch behavior.
 
@@ -34,14 +34,14 @@ Install SessionEngine via your preferred package manager:
 # npm
 npm install session-engine
 
-# yarn
-yarn add session-engine
-
 # pnpm
 pnpm add session-engine
 
 # bun
 bun add session-engine
+
+# yarn
+yarn add session-engine
 ```
 
 ---
@@ -174,7 +174,7 @@ bun run test:smoke
 
 - [`rate-engine`](https://github.com/cpauldev/rate-engine) for policy-driven rate limiting.
 - [`boundary-engine`](https://github.com/cpauldev/boundary-engine) for safe HTTP route boundaries.
-- [`redact-engine`](https://github.com/cpauldev/redact-engine) for sensitive data redaction.
+- [`redact-engine`](https://github.com/cpauldev/redact-engine) for sensitive data redaction and safe logging.
 - [`secret-engine`](https://github.com/cpauldev/secret-engine) for context-bound encryption and secret handling.
 
 ---

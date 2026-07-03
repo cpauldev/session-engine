@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.2] - 2026-07-03
+
+### Changed
+
+- Bumped package metadata and development dependency ranges for the public package export.
+- Kept public exports stable while normalizing export ordering.
+
 ## [0.1.0] - 2026-06-25
 
 Initial release of `SessionEngine`, a browser session and cache lifecycle toolkit for TypeScript applications.

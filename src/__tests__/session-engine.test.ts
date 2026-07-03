@@ -1,12 +1,12 @@
 import { describe, expect, it, mock } from "bun:test";
 
 import {
-  SessionEngine,
   clearStorageByPrefix,
   createAuthFetch,
   createStorageCache,
   getFromStorage,
   saveToStorage,
+  SessionEngine,
 } from "../index";
 
 function createMemoryStorage(): Storage {
