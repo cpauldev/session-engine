@@ -7,7 +7,7 @@ import {
   getFromStorage,
   saveToStorage,
   SessionEngine,
-} from "../index";
+} from "../index.js";
 
 function createMemoryStorage(): Storage {
   const map = new Map<string, string>();

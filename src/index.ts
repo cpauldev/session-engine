@@ -7,7 +7,7 @@ export {
   removeFromStorage,
   saveToStorage,
   SessionEngine,
-} from "./session-engine";
+} from "./session-engine.js";
 
 export type {
   AuthFetchOptions,
@@ -19,4 +19,4 @@ export type {
   StorageCache,
   StorageLike,
   StorageOptions,
-} from "./types";
+} from "./types.js";

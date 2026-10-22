@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.3] - 2026-10-22
+
+### Fixed
+
+- Emit Node-compatible ESM imports and declarations.
+- Clean build output before compiling and check Node runtime exports before packing.
+
 ## [0.1.2] - 2026-07-03
 
 ### Changed

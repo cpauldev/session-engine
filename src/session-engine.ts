@@ -7,7 +7,7 @@ import type {
   StorageCache,
   StorageLike,
   StorageOptions,
-} from "./types";
+} from "./types.js";
 
 function getDefaultStorage(): StorageLike | null {
   return typeof window === "undefined" ? null : window.localStorage;
